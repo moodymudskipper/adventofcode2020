@@ -1,0 +1,21 @@
+Package: adventofcode2020
+Title: My Solutions for Advent Of Code 2020
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Antoine",
+           family = "Fabri",
+           role = c("aut", "cre"),
+           email = "antoine.fabri@gmail.com")
+Description: My solutions for advent Of Code 2020.
+License: GPL-3
+Encoding: UTF-8
+Language: en
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
+Imports: 
+    dplyr,
+    magrittr,
+    purrr,
+    tidyr,
+    unglue
