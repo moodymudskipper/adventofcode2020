@@ -19,3 +19,5 @@ Imports:
     purrr,
     tidyr,
     unglue
+URL: https://github.com/moodymudskipper/adventofcode2020
+BugReports: https://github.com/moodymudskipper/adventofcode2020/issues
