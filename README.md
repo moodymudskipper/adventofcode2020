@@ -21,8 +21,8 @@ the body of these functions.
       `%>%` <- magrittr::`%>%`
     
       # data
-      input <-
-        scan("inst/extdata/day1.txt", what = numeric(), sep = "\n", quiet = TRUE)
+      file <- system.file("extdata/day1.txt", package = "adventofcode2020")
+      input <- scan(file, what = numeric(), sep = "\n", quiet = TRUE)
     
       # part 1
       part1 <-
@@ -52,7 +52,8 @@ the body of these functions.
       unglue_data <- unglue::unglue_data
     
       # data
-      input <- readLines("inst/extdata/day2.txt")
+      file <- system.file("extdata/day2.txt", package = "adventofcode2020")
+      input <- readLines(file)
     
       # part 1
       part1 <-
@@ -82,7 +83,8 @@ the body of these functions.
 
     function() {
       # data
-      input <- readLines("inst/extdata/day3.txt")
+      file <- system.file("extdata/day3.txt", package = "adventofcode2020")
+      input <- readLines(file)
     
       # part 1
     
@@ -132,7 +134,8 @@ the body of these functions.
       unglue_data <- unglue::unglue_data
     
       # data
-      input <- paste(readLines("inst/extdata/day4.txt"), collapse = "\n")
+      file <- system.file("extdata/day4.txt", package = "adventofcode2020")
+      input <- paste(readLines(file), collapse = "\n")
     
       # part1
       passports <- strsplit(input, "\n\n")[[1]]
@@ -175,7 +178,8 @@ the body of these functions.
 
     function() {
       # data
-      input <- readLines("inst/extdata/day5.txt")
+      file <- system.file("extdata/day5.txt", package = "adventofcode2020")
+      input <- readLines(file)
     
       # part 1
       all_ids <- strtoi(chartr("FBLR", "0101", input), base = 2)
@@ -196,7 +200,8 @@ the body of these functions.
       `%>%` <- magrittr::`%>%`
     
       # data
-      input <- paste(readLines("inst/extdata/day6.txt"), collapse = "\n")
+      file <- system.file("extdata/day6.txt", package = "adventofcode2020")
+      input <- paste(readLines(file), collapse = "\n")
     
       # part 1
       part1 <-
@@ -240,7 +245,8 @@ the body of these functions.
       spread      <- tidyr::spread
     
       # data
-      input <- readLines("inst/extdata/day7.txt")
+      file <- system.file("extdata/day7.txt", package = "adventofcode2020")
+      input <- readLines(file)
     
       # part 1
       patterns <- c(
@@ -294,7 +300,8 @@ the body of these functions.
       mutate      <- dplyr::mutate
     
       # data
-      input <- readLines("inst/extdata/day8.txt")
+      file <- system.file("extdata/day8.txt", package = "adventofcode2020")
+      input <- readLines(file)
     
       # part 1
       clean_data <- clean_data1 <-
@@ -374,8 +381,8 @@ the body of these functions.
       `%>%` <- magrittr::`%>%`
     
       # data
-      input <-
-        scan("inst/extdata/day9.txt", what = numeric(), sep = "\n", quiet = TRUE)
+      file <- system.file("extdata/day9.txt", package = "adventofcode2020")
+      input <- scan(file, what = numeric(), sep = "\n", quiet = TRUE)
     
       # part 1
       i <- 26
@@ -398,7 +405,8 @@ the body of these functions.
     function() {
     
       # data
-      input <- scan("inst/extdata/day10.txt", what = numeric(), sep = "\n", quiet = TRUE)
+      file <- system.file("extdata/day10.txt", package = "adventofcode2020")
+      input <- scan(file, what = numeric(), sep = "\n", quiet = TRUE)
     
       # part 1
     
@@ -442,11 +450,15 @@ the body of these functions.
 part 2 is wrong, works only on example.
 
     function() {
+      # for notes
+      . <- NULL
+    
       # dependencies
       `%>%` <- magrittr::`%>%`
     
       # data
-      input <- readLines("inst/extdata/day11.txt")
+      file <- system.file("extdata/day11.txt", package = "adventofcode2020")
+      input <- readLines(file)
     
     #   # example
     #   input <- "L.LL.LL.LL
@@ -613,6 +625,198 @@ part 2 is wrong, works only on example.
           break
       }
       part2 <- sum(mat == "#") # should not be 2219
+    
+      list(part1 = part1, part2 = part2)
+    }
+
+## day 12
+
+    function() {
+      # for notes
+      angle_incr <- NULL
+    
+      # dependencies
+      `%>%`       <- magrittr::`%>%`
+      unglue_data <- unglue::unglue_data
+      case_when   <- dplyr::case_when
+      mutate      <- dplyr::mutate
+    
+      # data
+      file <- system.file("extdata/day12.txt", package = "adventofcode2020")
+      input <- readLines(file)
+      data <- unglue_data(input, "{dir=.}{amount}", convert = TRUE)
+    
+      # part1
+    
+      data1 <- data %>%
+        mutate(
+          amount = as.numeric(amount),
+          angle_incr = case_when(
+            dir == "L" ~ amount,
+            dir == "R" ~ -amount,
+            TRUE ~ 0
+          ),
+          angle_total = cumsum(angle_incr),
+          y_incr = case_when(
+            dir == "N" ~ amount,
+            dir == "S" ~ -amount,
+            dir == "F" ~ amount * sin(angle_total * pi/180)),
+          x_incr = case_when(
+            dir == "E" ~ amount,
+            dir == "W" ~ -amount,
+            dir == "F" ~ amount * cos(angle_total * pi/180))
+        )
+      part1 <- abs(sum(data1$y_incr, na.rm = TRUE)) + abs(sum(data1$x_incr, na.rm = TRUE))
+    
+      # part2
+      waypoint <- c(10,1)
+      boat <- c(0,0)
+    
+      for(i in seq(nrow(data))) {
+        dir <- data[i, "dir"]
+        amount <- data[i, "amount"]
+        if(dir == "L")
+          waypoint <- switch(
+            as.character(amount),
+            "90"  = c(-waypoint[2],  waypoint[1]),
+            "180" = c(-waypoint[1], -waypoint[2]),
+            "270" = c(waypoint[2],  -waypoint[1]))
+        else if(dir == "R")
+          waypoint <- switch(
+            as.character(amount),
+            "90"  = c(waypoint[2],  -waypoint[1]),
+            "180" = c(-waypoint[1], -waypoint[2]),
+            "270" = c(-waypoint[2],  waypoint[1]))
+        else if(dir == "N")
+          waypoint[2] <- waypoint[2] + amount
+        else if(dir == "S")
+          waypoint[2] <- waypoint[2] - amount
+        else if(dir == "E")
+          waypoint[1] <- waypoint[1] + amount
+        else if(dir == "W")
+          waypoint[1] <- waypoint[1] - amount
+        else if(dir == "F")
+          boat <- boat + amount * waypoint
+      }
+      part2 <- sum(abs(boat))
+    
+      list(part1 = part1, part2 = part2)
+    }
+
+## day 13
+
+I skipped part 2 here
+
+    function() {
+      # dependencies
+      `%>%` <- magrittr::`%>%`
+    
+      # data
+      file <- system.file("extdata/day13.txt", package = "adventofcode2020")
+      input <- readLines(file)
+    
+      # part 1
+    
+      start <- as.numeric(input[1])
+      ids   <- as.numeric(setdiff(strsplit(input[2],",")[[1]], "x"))
+      next_dep <- ids - start %% ids
+      i <- which.min(next_dep)
+      part1 <- ids[i] * next_dep[i]
+    
+      # part 2
+    
+      part2 <- NULL
+    
+      list(part1 = part1, part2 = part2)
+    }
+
+## day 14
+
+    function() {
+      # for notes
+      address <- mask <- value <- . <- value_bin <- mask_split <- result_bin <-
+        result <- address_bin <- address_split <- address_bin2 <- address_expanded
+    
+    
+      `%>%` <- magrittr::`%>%`
+      unglue_data <- unglue::unglue_data
+      filter      <- dplyr::filter
+      mutate      <- dplyr::mutate
+      with_groups <- dplyr::with_groups
+      last        <- dplyr::last
+      pull        <- dplyr::pull
+      slice_tail  <- dplyr::slice_tail
+      map2_chr    <- purrr::map2_chr
+      map         <- purrr::map
+      map_chr     <- purrr::map_chr
+      fill        <- tidyr::fill
+      unnest      <- tidyr::unnest
+    
+      # data
+      file <- system.file("extdata/day14.txt", package = "adventofcode2020")
+      input <- readLines(file)
+    
+      input <- readLines("inst/extdata/day14.txt")
+      data <-
+        input %>%
+        unglue_data(c("mask = {mask}", "mem[{address}] = {value}")) %>%
+        fill(mask) %>%
+        filter(!is.na(address))
+    
+      data
+    
+      # part 1
+    
+      data1 <-
+        data %>%
+        mutate(
+          mask_split = strsplit(mask,""),
+          value_bin = map_chr(value, . %>%
+                            intToBits() %>%
+                            rev() %>%
+                            as.integer %>%
+                            paste(collapse = '') %>%
+                            paste0("0000", .)),
+          value_split = strsplit(value_bin,"") ,
+          result_bin = map2_chr(mask_split, value_split, ~
+                               ifelse(.x != "X", .x, .y) %>% paste(collapse="")),
+          result = strtoi(substr(result_bin,1,5), 2) * 2^31 +  strtoi(substr(result_bin,6,36), 2)
+        )
+    
+      part1 <- data1 %>%
+        with_groups("address_expanded", slice_tail, 1) %>%
+        pull(result) %>%
+        sum() %>%
+        format(scientific = FALSE)
+    
+      # part 2
+      data2 <-
+        data %>%
+        mutate(
+          mask_split = strsplit(mask,""),
+          address_bin = map_chr(address, . %>%
+                                intToBits() %>%
+                                rev() %>%
+                                as.integer %>%
+                                paste(collapse = '') %>%
+                                paste0("0000", .)),
+          address_split = strsplit(address_bin,""),
+          address_bin2 = map2_chr(mask_split, address_split, ~
+                         ifelse(.x == "X", "X", ifelse(.x == 0, .y, 1)) %>% paste(collapse="")),
+          address_expanded = map(address_bin2, ~ {
+            while(any(grepl("X",.))) {
+              . <- c(sub("X", "1", .), sub("X", "0", .))
+            }
+            strtoi(substr(.,1,5), 2) * 2^31 +  strtoi(substr(.,6,36), 2)
+          })) %>%
+        unnest(address_expanded)
+    
+      part2 <- data2 %>%
+        with_groups("address_expanded", slice_tail, 1) %>%
+        pull(value) %>%
+        as.numeric() %>%
+        sum() %>%
+        format(scientific = FALSE)
     
       list(part1 = part1, part2 = part2)
     }

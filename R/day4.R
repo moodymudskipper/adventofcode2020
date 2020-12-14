@@ -17,7 +17,8 @@ day4 <- function() {
   unglue_data <- unglue::unglue_data
 
   # data
-  input <- paste(readLines("inst/extdata/day4.txt"), collapse = "\n")
+  file <- system.file("extdata/day4.txt", package = "adventofcode2020")
+  input <- paste(readLines(file), collapse = "\n")
 
   # part1
   passports <- strsplit(input, "\n\n")[[1]]

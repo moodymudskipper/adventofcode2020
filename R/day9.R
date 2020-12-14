@@ -9,8 +9,8 @@ day9 <- function() {
   `%>%` <- magrittr::`%>%`
 
   # data
-  input <-
-    scan("inst/extdata/day9.txt", what = numeric(), sep = "\n", quiet = TRUE)
+  file <- system.file("extdata/day9.txt", package = "adventofcode2020")
+  input <- scan(file, what = numeric(), sep = "\n", quiet = TRUE)
 
   # part 1
   i <- 26

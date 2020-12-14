@@ -8,7 +8,8 @@ day8 <- function() {
   mutate      <- dplyr::mutate
 
   # data
-  input <- readLines("inst/extdata/day8.txt")
+  file <- system.file("extdata/day8.txt", package = "adventofcode2020")
+  input <- readLines(file)
 
   # part 1
   clean_data <- clean_data1 <-

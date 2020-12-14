@@ -2,11 +2,15 @@
 #'
 #' @export
 day11 <- function() {
+  # for notes
+  . <- NULL
+
   # dependencies
   `%>%` <- magrittr::`%>%`
 
   # data
-  input <- readLines("inst/extdata/day11.txt")
+  file <- system.file("extdata/day11.txt", package = "adventofcode2020")
+  input <- readLines(file)
 
 #   # example
 #   input <- "L.LL.LL.LL

@@ -10,7 +10,8 @@ day2 <- function() {
   unglue_data <- unglue::unglue_data
 
   # data
-  input <- readLines("inst/extdata/day2.txt")
+  file <- system.file("extdata/day2.txt", package = "adventofcode2020")
+  input <- readLines(file)
 
   # part 1
   part1 <-

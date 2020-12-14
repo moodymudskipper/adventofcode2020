@@ -3,7 +3,8 @@
 #' @export
 day3 <- function() {
   # data
-  input <- readLines("inst/extdata/day3.txt")
+  file <- system.file("extdata/day3.txt", package = "adventofcode2020")
+  input <- readLines(file)
 
   # part 1
 

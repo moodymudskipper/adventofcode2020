@@ -16,7 +16,8 @@ day7 <- function() {
   spread      <- tidyr::spread
 
   # data
-  input <- readLines("inst/extdata/day7.txt")
+  file <- system.file("extdata/day7.txt", package = "adventofcode2020")
+  input <- readLines(file)
 
   # part 1
   patterns <- c(

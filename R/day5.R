@@ -4,7 +4,8 @@
 #' @importFrom utils tail
 day5 <- function() {
   # data
-  input <- readLines("inst/extdata/day5.txt")
+  file <- system.file("extdata/day5.txt", package = "adventofcode2020")
+  input <- readLines(file)
 
   # part 1
   all_ids <- strtoi(chartr("FBLR", "0101", input), base = 2)

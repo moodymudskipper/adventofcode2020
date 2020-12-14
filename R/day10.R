@@ -4,7 +4,8 @@
 day10 <- function() {
 
   # data
-  input <- scan("inst/extdata/day10.txt", what = numeric(), sep = "\n", quiet = TRUE)
+  file <- system.file("extdata/day10.txt", package = "adventofcode2020")
+  input <- scan(file, what = numeric(), sep = "\n", quiet = TRUE)
 
   # part 1
 

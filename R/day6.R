@@ -9,7 +9,8 @@ day6 <- function() {
   `%>%` <- magrittr::`%>%`
 
   # data
-  input <- paste(readLines("inst/extdata/day6.txt"), collapse = "\n")
+  file <- system.file("extdata/day6.txt", package = "adventofcode2020")
+  input <- paste(readLines(file), collapse = "\n")
 
   # part 1
   part1 <-
