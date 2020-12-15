@@ -38,12 +38,10 @@ day15 <- function() {
   for (i in start:end) {
     # if we find last_num in previous values
     if(last_pos_i <- last_pos[last_num]) {
-      # if num had a last position, compute the new num as the offset
-      # and don't forget the additional offset of 1
-      new_num <-  i - last_pos_i + 1
-      # update the position of the last num and update the last num
+      # update the position of the last num
       last_pos[last_num] <- i
-      last_num <- new_num
+      # compute the new num as the offset (don't forget to add 1)
+      last_num <-  i - last_pos_i + 1
     } else {
       # update the position of the last num and update the last num to 1 (0+1)
       last_pos[last_num] <- i
