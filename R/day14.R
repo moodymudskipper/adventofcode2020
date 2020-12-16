@@ -1,11 +1,12 @@
 #' day 14
 #'
 #' @export
-#' @importFrom utils tail
+#' @importFrom utils tail head
 day14 <- function() {
   # for notes
   address <- mask <- value <- . <- value_bin <- mask_split <- result_bin <-
-    result <- address_bin <- address_split <- address_bin2 <- address_expanded
+    result <- address_bin <- address_split <- address_bin2 <-
+    address_expanded <- value_split <- NULL
 
 
   `%>%` <- magrittr::`%>%`

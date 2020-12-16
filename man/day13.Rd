@@ -2,10 +2,10 @@
 % Please edit documentation in R/day13.R
 \name{day13}
 \alias{day13}
-\title{day _i}
+\title{day 13}
 \usage{
 day13()
 }
 \description{
-day _i
+day 13
 }

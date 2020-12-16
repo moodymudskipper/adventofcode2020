@@ -1,4 +1,4 @@
-#' day _i
+#' day 13
 #'
 #' @export
 day13 <- function() {
