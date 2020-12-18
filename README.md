@@ -1011,11 +1011,11 @@ I skipped part 2 here
         `...` <- as_dots(init_ind)
         data[...] <- data0
     
-        for(i in seq(n_cycles)) {
-          # build offset cubes
-          `...` <- as_dots(replicate2(1:3, n_dim))
-          meta_indices <- expand.grid(...)
+        # build offset cubes
+        `...` <- as_dots(replicate2(1:3, n_dim))
+        meta_indices <- expand.grid(...)
     
+        for(i in seq(n_cycles)) {
           `...` <- as_dots(meta_indices)
           offset_cubes <- Map(..., f = function(...){
             `...` <- as_dots(list(mid-1, mid, mid+1)[c(...)])
@@ -1033,4 +1033,25 @@ I skipped part 2 here
       }
     
       list(part1 = solve(data, 3, 6), part2 =solve(data, 4, 6))
+    }
+
+## day 18
+
+    function() {
+    
+      file <- system.file("extdata/day18.txt", package = "adventofcode2020")
+      input <- readLines(file)
+    
+      # part 1
+      `-` <- `*`
+      input <- gsub("\\*", "\\-", input)
+      part1 <- sum(eval(as.call(c(c, parse(text = input)))))
+    
+      # part 2
+      `*` <- `+`
+      input <- gsub("\\+", "\\*", input)
+      part2 <- sum(eval(as.call(c(c, parse(text = input)))))
+      format(part2, scientific = FALSE)
+    
+      list(part1, part2)
     }
